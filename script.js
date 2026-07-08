@@ -9,61 +9,58 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 
-
 const lista = document.getElementById("lista");
-
 
 
 // MOSTRAR PRODUTOS
 
-async function listar(){
-
+async function listarProdutos(){
 
     if(!lista) return;
 
-
-    lista.innerHTML="";
+    lista.innerHTML = "";
 
 
     const produtos = await getDocs(collection(db,"produtos"));
 
 
-
     produtos.forEach((item)=>{
 
-
-        let produto = item.data();
-
+        const produto = item.data();
 
 
-        let card = document.createElement("div");
+        const card = document.createElement("div");
 
-        card.className="card";
-
-
-
-        card.innerHTML=`
-
-        <h3>${produto.nome}</h3>
-
-        <p>Estoque: ${produto.estoque}</p>
+        card.className = "card";
 
 
-        ${
-            location.pathname.includes("admin")
+        card.innerHTML = `
 
-            ?
+            <h3>${produto.nome}</h3>
 
-            `<button onclick="excluir('${item.id}')">
-            Excluir
-            </button>`
+            <p>Estoque: ${produto.estoque}</p>
 
-            :
 
- <a href="https://api.whatsapp.com/send?phone=5511995927265&text=Tenho interesse em ${encodeURIComponent(produto.nome)}" target="_blank">
-Comprar pelo WhatsApp
-</a>
-        }
+            ${
+                location.pathname.includes("admin")
+
+                ?
+
+                `
+                <button onclick="excluir('${item.id}')">
+                    Excluir
+                </button>
+                `
+
+                :
+
+                `
+                <a href="https://api.whatsapp.com/send?phone=5511995927265&text=Tenho interesse em ${encodeURIComponent(produto.nome)}" target="_blank">
+                    Comprar pelo WhatsApp
+                </a>
+                `
+
+            }
 
         `;
 
@@ -73,67 +70,72 @@ Comprar pelo WhatsApp
 
     });
 
-
 }
 
 
 
 // CADASTRAR PRODUTO
 
-const salvar = document.getElementById("salvar");
+const botao = document.getElementById("salvar");
 
 
-if(salvar){
+if(botao){
+
+    botao.onclick = async()=>{
 
 
-salvar.onclick = async()=>{
+        const id = document.getElementById("idProduto").value;
 
+        const nome = document.getElementById("nome").value;
 
-    let id = document.getElementById("idProduto").value;
-
-    let nome = document.getElementById("nome").value;
-
-    let estoque = document.getElementById("estoque").value;
-
-
-
-    await setDoc(doc(db,"produtos",id),{
-
-
-        nome:nome,
-
-        estoque:estoque
-
-
-    });
+        const estoque = document.getElementById("estoque").value;
 
 
 
-    alert("Produto cadastrado!");
+        if(!id || !nome || !estoque){
+
+            alert("Preencha todos os campos");
+
+            return;
+
+        }
 
 
 
-    listar();
+        await setDoc(doc(db,"produtos",id),{
+
+            nome:nome,
+
+            estoque:estoque
+
+        });
 
 
-};
+
+        alert("Produto cadastrado!");
 
 
+        document.getElementById("idProduto").value="";
+        document.getElementById("nome").value="";
+        document.getElementById("estoque").value="";
+
+
+        listarProdutos();
+
+
+    };
 
 }
 
 
 
-// EXCLUIR
+// EXCLUIR PRODUTO
 
-window.excluir = async(id)=>{
-
+window.excluir = async function(id){
 
     await deleteDoc(doc(db,"produtos",id));
 
-
-    listar();
-
+    listarProdutos();
 
 };
 
@@ -141,4 +143,4 @@ window.excluir = async(id)=>{
 
 // INICIAR
 
-listar();
+listarProdutos();
