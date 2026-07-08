@@ -60,9 +60,10 @@ async function listar(){
 
             :
 
-            `<a target="_blank"
-            https://api.whatsapp.com/send?phone=5511995927265text=Tenho interesse em ${encodeURIComponent(produto.nome)}">
-            </a>Comprar pelo WhatsApp
+            <a target="_blank">
+href="https://api.whatsapp.com/send?phone=5511995927265&text=Tenho interesse em ${encodeURIComponent(produto.nome)}">
+Comprar pelo WhatsApp
+</a>
             
         }
 
