@@ -1,0 +1,226 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AutoPeças - Cadastro</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>AutoPeças</h1>
+        <p>Cadastro de produtos</p>
+    </header>
+
+
+    <main>
+
+        <!-- CADASTRO -->
+
+        <section class="cadastro">
+
+            <h2>Cadastrar Autopeça</h2>
+
+            <form id="formProduto">
+
+                <label for="nome">Nome da peça</label>
+
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Ex: Pastilha de freio"
+                    required
+                >
+
+
+                <label for="codigo">Código da peça</label>
+
+                <input
+                    type="text"
+                    id="codigo"
+                    placeholder="Ex: PF-001"
+                    required
+                >
+
+
+                <label for="marca">Marca</label>
+
+                <input
+                    type="text"
+                    id="marca"
+                    placeholder="Ex: Fras-le"
+                    required
+                >
+
+
+                <label for="modelo">Modelo do veículo</label>
+
+                <input
+                    type="text"
+                    id="modelo"
+                    placeholder="Ex: Volkswagen Gol"
+                    required
+                >
+
+
+                <label for="categoria">Categoria</label>
+
+                <select id="categoria" required>
+
+                    <option value="">
+                        Selecione uma categoria
+                    </option>
+
+                    <option value="Freios">
+                        Freios
+                    </option>
+
+                    <option value="Motor">
+                        Motor
+                    </option>
+
+                    <option value="Suspensão">
+                        Suspensão
+                    </option>
+
+                    <option value="Filtros">
+                        Filtros
+                    </option>
+
+                    <option value="Elétrica">
+                        Elétrica
+                    </option>
+
+                    <option value="Ignição">
+                        Ignição
+                    </option>
+
+                    <option value="Arrefecimento">
+                        Arrefecimento
+                    </option>
+
+                    <option value="Acessórios">
+                        Acessórios
+                    </option>
+
+                </select>
+
+
+                <label for="preco">Preço</label>
+
+                <input
+                    type="number"
+                    id="preco"
+                    placeholder="89.90"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+
+
+                <label for="estoque">Estoque</label>
+
+                <input
+                    type="number"
+                    id="estoque"
+                    placeholder="10"
+                    min="0"
+                    required
+                >
+
+
+                <button type="submit" id="btnCadastrar">
+                    Cadastrar peça
+                </button>
+
+            </form>
+
+        </section>
+
+
+
+        <!-- PRODUTOS -->
+
+        <section class="produtos">
+
+            <h2>Peças cadastradas</h2>
+
+
+            <div id="listaProdutos">
+
+                <p id="mensagemProdutos">
+                    Carregando produtos...
+                </p>
+
+
+                <!-- MODELO DE UM PRODUTO -->
+
+                <article class="produto" hidden>
+
+                    <div class="produto-info">
+
+                        <h3 class="produto-nome">
+                            Nome da peça
+                        </h3>
+
+                        <p>
+                            Código:
+                            <span class="produto-codigo"></span>
+                        </p>
+
+                        <p>
+                            Marca:
+                            <span class="produto-marca"></span>
+                        </p>
+
+                        <p>
+                            Veículo:
+                            <span class="produto-modelo"></span>
+                        </p>
+
+                        <p>
+                            Categoria:
+                            <span class="produto-categoria"></span>
+                        </p>
+
+                        <p>
+                            Preço:
+                            R$ <span class="produto-preco"></span>
+                        </p>
+
+                        <p>
+                            Estoque:
+                            <span class="produto-estoque"></span>
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn-apagar"
+                    >
+                        Apagar
+                    </button>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+```
