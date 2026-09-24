@@ -13,257 +13,262 @@
 <body>
 
 <header>
-
-<h1>AutoPeças</h1>
-
-<p>
-    Cadastro e controle de estoque
-</p>
-
+    <h1>AutoPeças</h1>
+    <p>Cadastro e controle de estoque</p>
 </header>
+
 
 <main>
 
-<!-- ============================= -->
-<!-- CADASTRO -->
-<!-- ============================= -->
+    <!-- CADASTRO -->
 
-<section class="cadastro">
+    <section class="cadastro">
 
-    <h2>
-        Cadastrar Autopeça
-    </h2>
+        <h2>Cadastrar Autopeça</h2>
 
+        <form id="formProduto">
 
-    <form id="formProduto">
+            <label for="nome">
+                Nome da peça
+            </label>
 
-        <label for="nome">
-            Nome da peça
-        </label>
+            <input
+                type="text"
+                id="nome"
+                placeholder="Ex: Pastilha de freio"
+                required
+            >
 
-        <input
-            type="text"
-            id="nome"
-            placeholder="Ex: Pastilha de freio"
-            required
-        >
 
+            <label for="codigo">
+                Código da peça
+            </label>
 
-        <label for="codigo">
-            Código da peça
-        </label>
+            <input
+                type="text"
+                id="codigo"
+                placeholder="Ex: PF-001"
+                required
+            >
 
-        <input
-            type="text"
-            id="codigo"
-            placeholder="Ex: PF-001"
-            required
-        >
 
+            <label for="marca">
+                Marca
+            </label>
 
-        <label for="marca">
-            Marca
-        </label>
+            <input
+                type="text"
+                id="marca"
+                placeholder="Ex: Fras-le"
+                required
+            >
 
-        <input
-            type="text"
-            id="marca"
-            placeholder="Ex: Fras-le"
-            required
-        >
 
+            <label for="modelo">
+                Modelo do veículo
+            </label>
 
-        <label for="modelo">
-            Modelo do veículo
-        </label>
+            <input
+                type="text"
+                id="modelo"
+                placeholder="Ex: Volkswagen Gol"
+                required
+            >
 
-        <input
-            type="text"
-            id="modelo"
-            placeholder="Ex: Volkswagen Gol"
-            required
-        >
 
+            <label for="categoria">
+                Categoria
+            </label>
 
-        <label for="categoria">
-            Categoria
-        </label>
+            <select id="categoria" required>
 
-        <select
-            id="categoria"
-            required
-        >
+                <option value="">
+                    Selecione uma categoria
+                </option>
 
-            <option value="">
-                Selecione uma categoria
-            </option>
+                <option value="Freios">Freios</option>
+                <option value="Motor">Motor</option>
+                <option value="Suspensão">Suspensão</option>
+                <option value="Filtros">Filtros</option>
+                <option value="Elétrica">Elétrica</option>
+                <option value="Ignição">Ignição</option>
+                <option value="Arrefecimento">Arrefecimento</option>
+                <option value="Acessórios">Acessórios</option>
 
-            <option value="Freios">
-                Freios
-            </option>
+            </select>
 
-            <option value="Motor">
-                Motor
-            </option>
 
-            <option value="Suspensão">
-                Suspensão
-            </option>
+            <label for="preco">
+                Preço
+            </label>
 
-            <option value="Filtros">
-                Filtros
-            </option>
+            <input
+                type="number"
+                id="preco"
+                placeholder="89.90"
+                step="0.01"
+                min="0"
+                required
+            >
 
-            <option value="Elétrica">
-                Elétrica
-            </option>
 
-            <option value="Ignição">
-                Ignição
-            </option>
+            <label for="estoque">
+                Estoque inicial
+            </label>
 
-            <option value="Arrefecimento">
-                Arrefecimento
-            </option>
+            <input
+                type="number"
+                id="estoque"
+                placeholder="10"
+                min="0"
+                required
+            >
 
-            <option value="Acessórios">
-                Acessórios
-            </option>
 
-        </select>
+            <button
+                type="submit"
+                id="btnCadastrar"
+            >
+                Cadastrar peça
+            </button>
 
+        </form>
 
-        <label for="preco">
-            Preço
-        </label>
+    </section>
 
-        <input
-            type="number"
-            id="preco"
-            placeholder="89.90"
-            step="0.01"
-            min="0"
-            required
-        >
 
+    <!-- PRODUTOS -->
 
-        <label for="estoque">
-            Estoque inicial
-        </label>
+    <section class="produtos">
 
-        <input
-            type="number"
-            id="estoque"
-            placeholder="10"
-            min="0"
-            required
-        >
+        <h2>Peças cadastradas</h2>
 
+        <div id="listaProdutos">
 
-        <button
-            type="submit"
-            id="btnCadastrar"
-        >
-            Cadastrar peça
-        </button>
+            <p id="mensagemProdutos">
+                Carregando produtos...
+            </p>
 
-    </form>
 
-</section>
+            <!-- MODELO DO PRODUTO -->
 
+            <article
+                class="produto"
+                hidden
+            >
 
-<!-- ============================= -->
-<!-- PRODUTOS -->
-<!-- ============================= -->
+                <div class="produto-info">
 
-<section class="produtos">
+                    <h3 class="produto-nome">
+                        Nome da peça
+                    </h3>
 
-    <h2>
-        Peças cadastradas
-    </h2>
+                    <p>
+                        Código:
+                        <span class="produto-codigo"></span>
+                    </p>
 
+                    <p>
+                        Marca:
+                        <span class="produto-marca"></span>
+                    </p>
 
-    <div id="listaProdutos">
+                    <p>
+                        Veículo:
+                        <span class="produto-modelo"></span>
+                    </p>
 
-        <p id="mensagemProdutos">
-            Carregando produtos...
-        </p>
+                    <p>
+                        Categoria:
+                        <span class="produto-categoria"></span>
+                    </p>
 
+                    <p>
+                        Preço:
+                        R$
+                        <span class="produto-preco"></span>
+                    </p>
 
-        <!-- MODELO DO PRODUTO -->
+                    <p class="linha-estoque">
+                        Estoque:
+                        <strong class="produto-estoque"></strong>
+                    </p>
 
-        <article
-            class="produto"
-            hidden
-        >
+                </div>
 
-            <div class="produto-info">
 
-                <h3 class="produto-nome">
-                    Nome da peça
-                </h3>
+                <!-- CONTROLES -->
 
+                <div class="controle-produto">
 
-                <p>
-                    Código:
-                    <span class="produto-codigo"></span>
-                </p>
+                    <!-- ATUALIZAR ESTOQUE -->
 
+                    <button
+                        type="button"
+                        class="btn-estoque"
+                    >
+                        Atualizar estoque
+                    </button>
 
-                <p>
-                    Marca:
-                    <span class="produto-marca"></span>
-                </p>
 
+                    <!-- ÁREA DE EDIÇÃO -->
 
-                <p>
-                    Veículo:
-                    <span class="produto-modelo"></span>
-                </p>
+                    <div
+                        class="editar-estoque"
+                        hidden
+                    >
 
+                        <label>
+                            Novo estoque
+                        </label>
 
-                <p>
-                    Categoria:
-                    <span class="produto-categoria"></span>
-                </p>
+                        <input
+                            type="number"
+                            class="input-estoque"
+                            min="0"
+                        >
 
 
-                <p>
-                    Preço:
-                    R$
-                    <span class="produto-preco"></span>
-                </p>
+                        <div class="acoes-estoque">
 
+                            <button
+                                type="button"
+                                class="btn-salvar-estoque"
+                            >
+                                Salvar
+                            </button>
 
-                <p class="linha-estoque">
+                            <button
+                                type="button"
+                                class="btn-cancelar-estoque"
+                            >
+                                Cancelar
+                            </button>
 
-                    Estoque:
+                        </div>
 
-                    <strong class="produto-estoque"></strong>
+                    </div>
 
-                </p>
 
-            </div>
+                    <!-- APAGAR -->
 
+                    <button
+                        type="button"
+                        class="btn-apagar"
+                    >
+                        Apagar
+                    </button>
 
-            <div class="controle-produto">
+                </div>
 
-                <button
-                    type="button"
-                    class="btn-apagar"
-                >
-                    Apagar
-                </button>
+            </article>
 
-            </div>
+        </div>
 
-        </article>
-
-    </div>
-
-</section>
+    </section>
 
 </main>
+
 
 <script src="script.js"></script>
 
