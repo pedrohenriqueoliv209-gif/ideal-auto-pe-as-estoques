@@ -17,39 +17,25 @@ const modeloProduto =
 document.querySelector(".produto");
 
 // ==========================================
-// FUNÇÃO DE COMUNICAÇÃO COM SUPABASE
+// COMUNICAÇÃO COM SUPABASE
 // ==========================================
 
-async function supabaseFetch(
-tabela,
-opcoes = {}
-) {
+async function supabaseFetch(tabela, opcoes = {}) {
 
 const resposta = await fetch(
-
     `${SUPABASE_URL}/rest/v1/${tabela}`,
-
     {
         ...opcoes,
 
         headers: {
-
             "apikey": SUPABASE_KEY,
-
-            "Authorization":
-                `Bearer ${SUPABASE_KEY}`,
-
-            "Content-Type":
-                "application/json",
-
-            "Prefer":
-                "return=representation",
+            "Authorization": `Bearer ${SUPABASE_KEY}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=representation",
 
             ...(opcoes.headers || {})
-
         }
     }
-
 );
 
 return resposta;
@@ -64,178 +50,128 @@ async function carregarProdutos() {
 
 try {
 
-    const resposta =
-        await supabaseFetch(
-            "produtos?select=*&order=id.desc"
-        );
-
-
-    const dados =
-        await resposta.json();
-
-
-    console.log(
-        "Produtos:",
-        dados
+    const resposta = await supabaseFetch(
+        "produtos?select=*&order=id.desc"
     );
 
+    const dados = await resposta.json();
+
+    console.log("Produtos:", dados);
 
     if (!resposta.ok) {
 
-        console.error(dados);
+        console.error("Erro Supabase:", dados);
 
         mensagemProdutos.textContent =
             "Erro ao carregar produtos.";
 
-        mensagemProdutos.hidden =
-            false;
+        mensagemProdutos.hidden = false;
 
         return;
     }
 
 
-    // Remove os produtos que já estão na tela
+    // Remove produtos antigos
 
     const produtosAntigos =
         listaProdutos.querySelectorAll(
             ".produto:not([hidden])"
         );
 
-
-    produtosAntigos.forEach(
-        function(produto) {
-
-            produto.remove();
-
-        }
-    );
+    produtosAntigos.forEach(function(produto) {
+        produto.remove();
+    });
 
 
-    // Verifica se não existem produtos
+    // Nenhum produto
 
     if (dados.length === 0) {
 
         mensagemProdutos.textContent =
             "Nenhuma peça cadastrada.";
 
-        mensagemProdutos.hidden =
-            false;
+        mensagemProdutos.hidden = false;
 
         return;
     }
 
 
-    mensagemProdutos.hidden =
-        true;
+    mensagemProdutos.hidden = true;
 
 
-    // Coloca cada produto na tela
+    // Mostrar produtos
 
-    dados.forEach(
-        function(produto) {
+    dados.forEach(function(produto) {
 
-            const novoProduto =
-                modeloProduto.cloneNode(true);
+        const novoProduto =
+            modeloProduto.cloneNode(true);
 
-
-            novoProduto.hidden =
-                false;
+        novoProduto.hidden = false;
 
 
-            // Informações
-
-            novoProduto.querySelector(
-                ".produto-nome"
-            ).textContent =
-                produto.nome;
+        novoProduto.querySelector(
+            ".produto-nome"
+        ).textContent = produto.nome;
 
 
-            novoProduto.querySelector(
-                ".produto-codigo"
-            ).textContent =
-                produto.codigo_peca;
+        novoProduto.querySelector(
+            ".produto-codigo"
+        ).textContent = produto.codigo_peca;
 
 
-            novoProduto.querySelector(
-                ".produto-marca"
-            ).textContent =
-                produto.marca;
+        novoProduto.querySelector(
+            ".produto-marca"
+        ).textContent = produto.marca;
 
 
-            novoProduto.querySelector(
-                ".produto-modelo"
-            ).textContent =
-                produto.modelo_veiculo;
+        novoProduto.querySelector(
+            ".produto-modelo"
+        ).textContent = produto.modelo_veiculo;
 
 
-            novoProduto.querySelector(
-                ".produto-categoria"
-            ).textContent =
-                produto.categoria;
+        novoProduto.querySelector(
+            ".produto-categoria"
+        ).textContent = produto.categoria;
 
 
-            novoProduto.querySelector(
-                ".produto-preco"
-            ).textContent =
-                Number(
-                    produto.preco
-                ).toFixed(2);
+        novoProduto.querySelector(
+            ".produto-preco"
+        ).textContent =
+            Number(produto.preco).toFixed(2);
 
 
-            novoProduto.querySelector(
-                ".produto-estoque"
-            ).textContent =
-                produto.estoque;
+        novoProduto.querySelector(
+            ".produto-estoque"
+        ).textContent = produto.estoque;
 
 
-            // ID do produto
+        // ID do produto
 
-            novoProduto.dataset.id =
-                produto.id;
-
-
-            // Botão apagar
-
-            const botaoApagar =
-                novoProduto.querySelector(
-                    ".btn-apagar"
-                );
+        novoProduto.dataset.id =
+            produto.id;
 
 
-            botaoApagar.dataset.id =
-                produto.id;
+        // Botão apagar
+
+        novoProduto.querySelector(
+            ".btn-apagar"
+        ).dataset.id =
+            produto.id;
 
 
-            // Botão atualizar estoque
+        // Campo de estoque
 
-            const botaoEstoque =
-                novoProduto.querySelector(
-                    ".btn-estoque"
-                );
-
-
-            botaoEstoque.dataset.id =
-                produto.id;
+        novoProduto.querySelector(
+            ".input-estoque"
+        ).value =
+            produto.estoque;
 
 
-            // Campo de estoque
+        listaProdutos.appendChild(
+            novoProduto
+        );
 
-            const inputEstoque =
-                novoProduto.querySelector(
-                    ".input-estoque"
-                );
-
-
-            inputEstoque.value =
-                produto.estoque;
-
-
-            listaProdutos.appendChild(
-                novoProduto
-            );
-
-        }
-    );
+    });
 
 }
 
@@ -246,14 +182,10 @@ catch (erro) {
         erro
     );
 
-
     mensagemProdutos.textContent =
         "Erro ao conectar com o Supabase.";
 
-
-    mensagemProdutos.hidden =
-        false;
-
+    mensagemProdutos.hidden = false;
 }
 
 }
@@ -276,30 +208,25 @@ async function(event) {
                 "nome"
             ).value.trim(),
 
-
         codigo_peca:
             document.getElementById(
                 "codigo"
             ).value.trim(),
-
 
         marca:
             document.getElementById(
                 "marca"
             ).value.trim(),
 
-
         modelo_veiculo:
             document.getElementById(
                 "modelo"
             ).value.trim(),
 
-
         categoria:
             document.getElementById(
                 "categoria"
             ).value,
-
 
         preco:
             Number(
@@ -308,14 +235,12 @@ async function(event) {
                 ).value
             ),
 
-
         estoque:
             Number(
                 document.getElementById(
                     "estoque"
                 ).value
             )
-
     };
 
 
@@ -325,14 +250,10 @@ async function(event) {
             await supabaseFetch(
                 "produtos",
                 {
-
                     method: "POST",
 
                     body:
-                        JSON.stringify(
-                            produto
-                        )
-
+                        JSON.stringify(produto)
                 }
             );
 
@@ -349,9 +270,14 @@ async function(event) {
 
         if (!resposta.ok) {
 
-            console.error(dados);
+            console.error(
+                "Erro Supabase:",
+                dados
+            );
 
             alert(
+                dados.message ||
+                dados.mensagem ||
                 "Erro ao cadastrar produto."
             );
 
@@ -366,7 +292,6 @@ async function(event) {
 
         form.reset();
 
-
         await carregarProdutos();
 
     }
@@ -378,7 +303,6 @@ async function(event) {
         alert(
             "Erro ao conectar com o Supabase."
         );
-
     }
 
 }
@@ -394,7 +318,7 @@ listaProdutos.addEventListener(
 async function(event) {
 
     // ==================================
-    // ATUALIZAR ESTOQUE
+    // ABRIR ATUALIZAÇÃO DO ESTOQUE
     // ==================================
 
     const botaoEstoque =
@@ -423,26 +347,20 @@ async function(event) {
             );
 
 
-        areaEdicao.hidden =
-            false;
+        areaEdicao.hidden = false;
 
-
-        botaoEstoque.hidden =
-            true;
-
+        botaoEstoque.hidden = true;
 
         input.focus();
 
-
         input.select();
-
 
         return;
     }
 
 
     // ==================================
-    // CANCELAR ESTOQUE
+    // CANCELAR
     // ==================================
 
     const botaoCancelar =
@@ -483,25 +401,18 @@ async function(event) {
             ).textContent;
 
 
-        input.value =
-            estoqueAtual;
+        input.value = estoqueAtual;
 
+        areaEdicao.hidden = true;
 
-        areaEdicao.hidden =
-            true;
+        botaoAtualizar.hidden = false;
 
-
-        botaoAtualizar.hidden =
-            false;
-
-
-        return;￼
-
+        return;
     }
 
 
     // ==================================
-    // SALVAR ESTOQUE
+    // SALVAR NOVO ESTOQUE
     // ==================================
 
     const botaoSalvar =
@@ -529,15 +440,11 @@ async function(event) {
 
 
         const novoEstoque =
-            Number(
-                input.value
-            );
+            Number(input.value);
 
 
         if (
-            !Number.isInteger(
-                novoEstoque
-            ) ||
+            !Number.isInteger(novoEstoque) ||
             novoEstoque < 0
         ) {
 
@@ -549,49 +456,70 @@ async function(event) {
         }
 
 
+        if (!id) {
+
+            alert(
+                "Erro: ID do produto não encontrado."
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "Atualizando produto:",
+            id
+        );
+
+        console.log(
+            "Novo estoque:",
+            novoEstoque
+        );
+
+
         try {
 
-            botaoSalvar.disabled =
-                true;
+            botaoSalvar.disabled = true;
 
 
             const resposta =
                 await supabaseFetch(
                     `produtos?id=eq.${encodeURIComponent(id)}`,
                     {
-
                         method: "PATCH",
 
-                        body:
-                            JSON.stringify({
-                                estoque:
-                                    novoEstoque
-                            })
-
+                        body: JSON.stringify({
+                            estoque:
+                                novoEstoque
+                        })
                     }
                 );
 
 
-            const dados =
-                await resposta.json();
+            const texto =
+                await resposta.text();
 
 
             console.log(
-                "Resposta atualização:",
-                dados
+                "Resposta PATCH:",
+                resposta.status,
+                texto
             );
 
 
             if (!resposta.ok) {
 
-                console.error(dados);
-
-                alert(
-                    "Erro ao atualizar o estoque."
+                console.error(
+                    "Erro Supabase:",
+                    texto
                 );
 
-                botaoSalvar.disabled =
-                    false;
+                alert(
+                    "Erro ao atualizar estoque:\n\n" +
+                    texto
+                );
+
+                botaoSalvar.disabled = false;
 
                 return;
             }
@@ -608,15 +536,16 @@ async function(event) {
 
         catch (erro) {
 
-            console.error(erro);
+            console.error(
+                "Erro no PATCH:",
+                erro
+            );
 
             alert(
                 "Erro ao conectar com o Supabase."
             );
 
-            botaoSalvar.disabled =
-                false;
-
+            botaoSalvar.disabled = false;
         }
 
 
@@ -675,22 +604,27 @@ async function(event) {
             );
 
 
-        const dados =
-            await resposta.json();
+        const texto =
+            await resposta.text();
 
 
         console.log(
-            "Resposta exclusão:",
-            dados
+            "Resposta DELETE:",
+            resposta.status,
+            texto
         );
 
 
         if (!resposta.ok) {
 
-            console.error(dados);
+            console.error(
+                "Erro Supabase:",
+                texto
+            );
 
             alert(
-                "Erro ao apagar produto."
+                "Erro ao apagar produto:\n\n" +
+                texto
             );
 
             return;
@@ -713,7 +647,6 @@ async function(event) {
         alert(
             "Erro ao conectar com o Supabase."
         );
-
     }
 
 }
@@ -721,7 +654,7 @@ async function(event) {
 );
 
 // ==========================================
-// INICIAR SISTEMA
+// INICIAR
 // ==========================================
 
 carregarProdutos();
