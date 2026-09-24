@@ -2,35 +2,38 @@
 
 <html lang="pt-BR">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AutoPeças - Estoque</title>
 
 <link rel="stylesheet" href="style.css">
-
 
 </head>
 
 <body>
 
 <header>
-    <h1>AutoPeças</h1>
-    <p>Cadastro e controle de estoque</p>
+
+<h1>AutoPeças</h1>
+
+<p>
+    Cadastro e controle de estoque
+</p>
+
 </header>
 
 <main>
 
-```
-<!-- ==========================================
-     CADASTRO
-=========================================== -->
+<!-- ============================= -->
+<!-- CADASTRO -->
+<!-- ============================= -->
 
 <section class="cadastro">
 
-    <h2>Cadastrar Autopeça</h2>
+    <h2>
+        Cadastrar Autopeça
+    </h2>
+
 
     <form id="formProduto">
 
@@ -86,7 +89,10 @@
             Categoria
         </label>
 
-        <select id="categoria" required>
+        <select
+            id="categoria"
+            required
+        >
 
             <option value="">
                 Selecione uma categoria
@@ -166,13 +172,16 @@
 </section>
 
 
-<!-- ==========================================
-     PRODUTOS
-=========================================== -->
+<!-- ============================= -->
+<!-- PRODUTOS -->
+<!-- ============================= -->
 
 <section class="produtos">
 
-    <h2>Peças cadastradas</h2>
+    <h2>
+        Peças cadastradas
+    </h2>
+
 
     <div id="listaProdutos">
 
@@ -194,25 +203,30 @@
                     Nome da peça
                 </h3>
 
+
                 <p>
                     Código:
                     <span class="produto-codigo"></span>
                 </p>
+
 
                 <p>
                     Marca:
                     <span class="produto-marca"></span>
                 </p>
 
+
                 <p>
                     Veículo:
                     <span class="produto-modelo"></span>
                 </p>
 
+
                 <p>
                     Categoria:
                     <span class="produto-categoria"></span>
                 </p>
+
 
                 <p>
                     Preço:
@@ -220,63 +234,19 @@
                     <span class="produto-preco"></span>
                 </p>
 
+
                 <p class="linha-estoque">
+
                     Estoque:
+
                     <strong class="produto-estoque"></strong>
+
                 </p>
 
             </div>
 
 
-            <!-- ==================================
-                 CONTROLE DE ESTOQUE
-            =================================== -->
-
             <div class="controle-produto">
-
-                <button
-                    type="button"
-                    class="btn-estoque"
-                >
-                    Atualizar estoque
-                </button>
-
-
-                <div
-                    class="editar-estoque"
-                    hidden
-                >
-
-                    <label>
-                        Novo estoque
-                    </label>
-
-                    <input
-                        type="number"
-                        class="input-estoque"
-                        min="0"
-                    >
-
-                    <div class="acoes-estoque">
-
-                        <button
-                            type="button"
-                            class="btn-salvar-estoque"
-                        >
-                            Salvar
-                        </button>
-
-                        <button
-                            type="button"
-                            class="btn-cancelar-estoque"
-                        >
-                            Cancelar
-                        </button>
-
-                    </div>
-
-                </div>
-
 
                 <button
                     type="button"
@@ -292,7 +262,6 @@
     </div>
 
 </section>
-
 
 </main>
 
